@@ -27,7 +27,6 @@ func (r *Repository) Get(c context.Context, id string) (*models.User, error) {
 func (r *Repository) GetByUserAccountID(c context.Context, id string) (*models.User, error) {
 	item := models.User{}
 	err := r.helper.DB.IDB(c).NewSelect().Model(&item).
-		Relation("UsersDomains").
 		Where("?TableAlias.user_account_id = ?", id).
 		Scan(c)
 	return &item, err

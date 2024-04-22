@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"net/http"
 
 	baseModels "github.com/pro-assistance/pro-assister/models"
@@ -14,6 +15,7 @@ func (h *Handler) Register(c *gin.Context) {
 	if h.helper.HTTP.HandleError(c, err) {
 		return
 	}
+	fmt.Println("user", item)
 	res, err := S.Register(c.Request.Context(), item.Email, item.Password)
 	if h.helper.HTTP.HandleError(c, err) {
 		return

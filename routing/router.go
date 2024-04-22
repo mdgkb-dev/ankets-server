@@ -18,7 +18,7 @@ import (
 func Init(r *gin.Engine, helper *helperPack.Helper) {
 	m := middleware.CreateMiddleware(helper)
 	api, apiNoToken := baseRouter.Init(r, helper)
-	api.Use(m.InjectClaims())
+	// api.Use(m.InjectClaims())
 	api.Use(m.InjectFTSP())
 	auth.Init(helper)
 	authRouter.Init(apiNoToken.Group("/auth"), auth.H)

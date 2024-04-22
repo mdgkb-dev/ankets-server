@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	baseModels "github.com/pro-assistance/pro-assister/models"
 )
 
 func (h *Handler) Create(c *gin.Context) {
@@ -29,11 +30,11 @@ func (h *Handler) GetAll(c *gin.Context) {
 }
 
 func (h *Handler) FTSP(c *gin.Context) {
-	_, err := S.GetAll(c.Request.Context())
+	data, err := S.GetAll(c.Request.Context())
 	if h.helper.HTTP.HandleError(c, err) {
 		return
 	}
-	// c.JSON(http.StatusOK, models.FTSPAnswer{Data: data, FTSP: *h.helper.SQL.ExtractFTSP(c.Request.Context())})
+	c.JSON(http.StatusOK, baseModels.FTSPAnswer{Data: data, FTSP: *h.helper.SQL.ExtractFTSP(c.Request.Context())})
 }
 
 func (h *Handler) Get(c *gin.Context) {
