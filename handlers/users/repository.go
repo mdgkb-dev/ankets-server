@@ -9,6 +9,7 @@ func (r *Repository) GetAll(c context.Context) (item models.UsersWithCount, err 
 	item.Users = make(models.Users, 0)
 	q := r.helper.DB.IDB(c).NewSelect().
 		Model(&item.Users).
+		Relation("Human").
 		Relation("UserAccount")
 
 	r.helper.SQL.ExtractFTSP(c).HandleQuery(q)
@@ -19,7 +20,8 @@ func (r *Repository) GetAll(c context.Context) (item models.UsersWithCount, err 
 func (r *Repository) Get(c context.Context, id string) (*models.User, error) {
 	item := models.User{}
 	err := r.helper.DB.IDB(c).NewSelect().Model(&item).
-		Where("id = ?", id).
+		Relation("Human").
+		Where("?TableAlias.id = ?", id).
 		Scan(c)
 	return &item, err
 }
