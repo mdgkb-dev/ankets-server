@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"mdgkb/ankets-server/models"
 	"net/http"
 
@@ -38,7 +39,8 @@ func (h *Handler) FTSP(c *gin.Context) {
 }
 
 func (h *Handler) Get(c *gin.Context) {
-	item, err := S.Get(c.Request.Context(), c.Param("slug"))
+	fmt.Println("1111")
+	item, err := S.Get(c.Request.Context(), c.Param("id"))
 	if h.helper.HTTP.HandleError(c, err) {
 		return
 	}

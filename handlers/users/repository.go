@@ -19,7 +19,7 @@ func (r *Repository) GetAll(c context.Context) (item models.UsersWithCount, err 
 func (r *Repository) Get(c context.Context, id string) (*models.User, error) {
 	item := models.User{}
 	err := r.helper.DB.IDB(c).NewSelect().Model(&item).
-		Where("", id).
+		Where("id = ?", id).
 		Scan(c)
 	return &item, err
 }
