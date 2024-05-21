@@ -5,15 +5,16 @@ import (
 	"mdgkb/ankets-server/handlers/questions"
 	"mdgkb/ankets-server/handlers/researches"
 	"mdgkb/ankets-server/handlers/users"
+	"mdgkb/ankets-server/handlers/usersresearches"
 	authRouter "mdgkb/ankets-server/routing/auth"
 
 	usersRouter "mdgkb/ankets-server/routing/users"
 
-	//"mdgkb/ankets-server/handlers/representative"
 	"github.com/gin-gonic/gin"
 
 	questionsRouter "mdgkb/ankets-server/routing/questions"
 	researchesRouter "mdgkb/ankets-server/routing/researches"
+	usersresearchesRouter "mdgkb/ankets-server/routing/usersresearches"
 
 	helperPack "github.com/pro-assistance/pro-assister/helper"
 	"github.com/pro-assistance/pro-assister/middleware"
@@ -31,6 +32,8 @@ func Init(r *gin.Engine, helper *helperPack.Helper) {
 	users.Init(helper)
 	usersRouter.Init(api.Group("/users"), users.H)
 
+	usersresearches.Init(helper)
+	usersresearchesRouter.Init(api.Group("/users-researches"), usersresearches.H)
 	researches.Init(helper)
 	researchesRouter.Init(api.Group("/researches"), researches.H)
 
