@@ -2,12 +2,14 @@ package routing
 
 import (
 	"mdgkb/ankets-server/handlers/auth"
+	"mdgkb/ankets-server/handlers/humans"
 	"mdgkb/ankets-server/handlers/questions"
 	"mdgkb/ankets-server/handlers/researches"
 	"mdgkb/ankets-server/handlers/users"
 	"mdgkb/ankets-server/handlers/usersresearches"
 	authRouter "mdgkb/ankets-server/routing/auth"
 
+	humansRouter "mdgkb/ankets-server/routing/humans"
 	usersRouter "mdgkb/ankets-server/routing/users"
 
 	"github.com/gin-gonic/gin"
@@ -31,6 +33,9 @@ func Init(r *gin.Engine, helper *helperPack.Helper) {
 
 	users.Init(helper)
 	usersRouter.Init(api.Group("/users"), users.H)
+
+	humans.Init(helper)
+	humansRouter.Init(api.Group("/humans"), humans.H)
 
 	usersresearches.Init(helper)
 	usersresearchesRouter.Init(api.Group("/users-researches"), usersresearches.H)

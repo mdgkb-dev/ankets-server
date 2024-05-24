@@ -19,20 +19,8 @@ func (r *Repository) GetAll(c context.Context) (items models.UsersResearchesWith
 	items.UsersResearches = make(models.UsersResearches, 0)
 	query := r.helper.DB.IDB(c).NewSelect().
 		Model(&items.UsersResearches).
-		Relation("Questions", func(q *bun.SelectQuery) *bun.SelectQuery {
-			return q.Order("questions.item_order")
-		}).
-		Relation("Questions.AnswerVariants", func(q *bun.SelectQuery) *bun.SelectQuery {
-			return q.Order("answer_variants.item_order")
-		}).
-		// Relation("Questions.QuestionExamples").
-		Relation("Questions.ValueType").
-		// Relation("Questions.QuestionVariants", func(q *bun.SelectQuery) *bun.SelectQuery {
-		// 	return q.Order("question_variants.name")
-		// }).
-		Relation("Questions.Children.ValueType").
-		Relation("Questions.Children.AnswerVariants")
-		// Relation("Formulas.FormulaResults")
+		Relation("Research")
+	// Relation("Formulas.FormulaResults")
 
 	// query.Join("join researches_domains on researches_domains.research_id = researches.id and researches_domains.domain_id in (?)", bun.In(middleware.ClaimDomainIDS.FromContextSlice(c)))
 	r.helper.SQL.ExtractFTSP(c).HandleQuery(query)

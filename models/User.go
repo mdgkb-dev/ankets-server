@@ -14,10 +14,10 @@ type User struct {
 	ID            uuid.NullUUID `bun:"id,pk,type:uuid,default:uuid_generate_v4()" json:"id" `
 	Position      string        `json:"position"`
 	Division      string        `json:"division"`
-	Role          string        `json:"division"`
+	Role          string        `json:"role"`
 
 	Human   *Human        `bun:"rel:belongs-to" json:"human"`
-	HumanID uuid.NullUUID `json:"humanId"`
+	HumanID uuid.NullUUID `bun:"type:uuid" json:"humanId"`
 
 	UserAccountID uuid.NullUUID           `bun:"type:uuid" json:"userAccountId"`
 	UserAccount   *baseModels.UserAccount `bun:"rel:belongs-to" json:"userAccount"`
