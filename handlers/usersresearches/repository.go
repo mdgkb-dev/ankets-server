@@ -19,7 +19,9 @@ func (r *Repository) GetAll(c context.Context) (items models.UsersResearchesWith
 	items.UsersResearches = make(models.UsersResearches, 0)
 	query := r.helper.DB.IDB(c).NewSelect().
 		Model(&items.UsersResearches).
-		Relation("Research")
+		Relation("ResearchResults").
+		Relation("Research.Questions").
+		Relation("User.UserAccount")
 	// Relation("Formulas.FormulaResults")
 
 	// query.Join("join researches_domains on researches_domains.research_id = researches.id and researches_domains.domain_id in (?)", bun.In(middleware.ClaimDomainIDS.FromContextSlice(c)))
@@ -33,7 +35,9 @@ func (r *Repository) Get(c context.Context, id string) (*models.UserResearch, er
 	item := models.UserResearch{}
 	err := r.helper.DB.IDB(c).NewSelect().
 		Model(&item).
-		Relation("Research").
+		Relation("Research.Questions").
+		Relation("User.UserAccount").
+		Relation("ResearchResults.Answers").
 		Where("?TableAlias.id = ?", id).Scan(c)
 	if err != nil {
 		return nil, err

@@ -6,6 +6,7 @@ import (
 	"mdgkb/ankets-server/handlers/humans"
 	"mdgkb/ankets-server/handlers/questions"
 	"mdgkb/ankets-server/handlers/researches"
+	"mdgkb/ankets-server/handlers/researchesresults"
 	"mdgkb/ankets-server/handlers/users"
 	"mdgkb/ankets-server/handlers/usersresearches"
 	authRouter "mdgkb/ankets-server/routing/auth"
@@ -18,6 +19,7 @@ import (
 	answervariantsRouter "mdgkb/ankets-server/routing/answervariants"
 	questionsRouter "mdgkb/ankets-server/routing/questions"
 	researchesRouter "mdgkb/ankets-server/routing/researches"
+	researchesresultsRouter "mdgkb/ankets-server/routing/researchesresults"
 	usersresearchesRouter "mdgkb/ankets-server/routing/usersresearches"
 
 	helperPack "github.com/pro-assistance/pro-assister/helper"
@@ -46,6 +48,8 @@ func Init(r *gin.Engine, helper *helperPack.Helper) {
 
 	questions.Init(helper)
 	questionsRouter.Init(api.Group("/questions"), questions.H)
+
+	researchesresultsRouter.Init(api.Group("/researches-results"), researchesresults.CreateHandler(helper))
 
 	answervariants.Init(helper)
 	answervariantsRouter.Init(api.Group("/answer-variants"), answervariants.H)

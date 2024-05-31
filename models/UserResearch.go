@@ -15,6 +15,8 @@ type UserResearch struct {
 	Research   *Research     `bun:"rel:belongs-to" json:"research"`
 	ResearchID uuid.NullUUID `bun:"type:uuid" json:"researchId"`
 
+	ResearchResults ResearchResults `bun:"rel:has-many" json:"researchResults"`
+
 	User   *User         `bun:"rel:belongs-to" json:"user"`
 	UserID uuid.NullUUID `bun:"type:uuid" json:"userID"`
 	Num    string        `json:"num"`
