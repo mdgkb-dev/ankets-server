@@ -20,7 +20,6 @@ func (r *Repository) GetAll(c context.Context) (items models.UsersResearchesWith
 	query := r.helper.DB.IDB(c).NewSelect().
 		Model(&items.UsersResearches).
 		Relation("ResearchResults").
-		Relation("Research.Questions").
 		Relation("User.UserAccount")
 	// Relation("Formulas.FormulaResults")
 
@@ -38,6 +37,24 @@ func (r *Repository) Get(c context.Context, id string) (*models.UserResearch, er
 		Relation("Research.Questions").
 		Relation("User.UserAccount").
 		Relation("ResearchResults.Answers").
+		Relation("Research.Questions", func(q *bun.SelectQuery) *bun.SelectQuery {
+			return q.Order("questions.item_order")
+		}).
+		Relation("Research.Questions.AnswerVariants", func(q *bun.SelectQuery) *bun.SelectQuery {
+			return q.Order("answer_variants.item_order")
+		}).
+		Relation("Research.Questions.ValueType").
+		Relation("Research.Questions.Children", func(q *bun.SelectQuery) *bun.SelectQuery {
+			return q.Order("questions.item_order")
+		}).
+		Relation("Research.Questions.Children.Children", func(q *bun.SelectQuery) *bun.SelectQuery {
+			return q.Order("questions.item_order")
+		}).
+		Relation("Research.Questions.Children.ValueType").
+		Relation("Research.Questions.Children.Children.ValueType").
+		Relation("Research.Questions.Children.AnswerVariants", func(q *bun.SelectQuery) *bun.SelectQuery {
+			return q.Order("answer_variants.item_order")
+		}).
 		Where("?TableAlias.id = ?", id).Scan(c)
 	if err != nil {
 		return nil, err

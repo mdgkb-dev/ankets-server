@@ -18,7 +18,7 @@ type UserResearch struct {
 	ResearchResults ResearchResults `bun:"rel:has-many" json:"researchResults"`
 
 	User   *User         `bun:"rel:belongs-to" json:"user"`
-	UserID uuid.NullUUID `bun:"type:uuid" json:"userID"`
+	UserID uuid.NullUUID `bun:"type:uuid" json:"userId"`
 	Num    string        `json:"num"`
 
 	CreatedAt time.Time `bun:",nullzero,notnull,default:current_timestamp" json:"createdAt"`
