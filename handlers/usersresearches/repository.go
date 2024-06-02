@@ -20,6 +20,7 @@ func (r *Repository) GetAll(c context.Context) (items models.UsersResearchesWith
 	query := r.helper.DB.IDB(c).NewSelect().
 		Model(&items.UsersResearches).
 		Relation("ResearchResults").
+		Relation("Research").
 		Relation("User.UserAccount")
 	// Relation("Formulas.FormulaResults")
 
