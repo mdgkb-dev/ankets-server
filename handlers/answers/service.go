@@ -1,75 +1,38 @@
-package answers
+package fieldfills
 
 import (
-	// "mdgkb/ankets-server/handlers/answerfiles"
-	"mdgkb/ankets-server/handlers/selectedanswervariants"
+	"context"
 	"mdgkb/ankets-server/models"
-
-	"github.com/google/uuid"
 )
 
-func (s *Service) Create(item *models.Answer) error {
-	return s.repository.create(item)
-}
-
-func (s *Service) GetAll() ([]*models.Answer, error) {
-	items, err := s.repository.getAll()
+func (s *Service) Create(c context.Context, item *models.FieldFill) error {
+	err := R.Create(c, item)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return items, nil
+	return err
 }
 
-func (s *Service) Get(id *string) (*models.Answer, error) {
-	item, err := s.repository.get(id)
+func (s *Service) GetAll(c context.Context) (models.FieldFillsWithCount, error) {
+	return R.GetAll(c)
+}
+
+func (s *Service) Get(c context.Context, id string) (*models.FieldFill, error) {
+	item, err := R.Get(c, id)
 	if err != nil {
 		return nil, err
 	}
 	return item, nil
 }
 
-func (s *Service) Update(item *models.Answer) error {
-	return s.repository.update(item)
-}
-
-func (s *Service) Delete(id *string) error {
-	return s.repository.delete(id)
-}
-
-func (s *Service) UpsertMany(items models.Answers) error {
-	if len(items) == 0 {
-		return nil
-	}
-	err := s.repository.upsertMany(items)
+func (s *Service) Update(c context.Context, item *models.FieldFill) error {
+	err := R.Update(c, item)
 	if err != nil {
 		return err
 	}
-	selectedAnswerVariantsService := selectedanswervariants.CreateService(s.helper)
-	err = selectedAnswerVariantsService.UpsertMany(items.GetSelectedAnswerVariants())
-	if err != nil {
-		return err
-	}
-	err = selectedAnswerVariantsService.DeleteMany(items.GetSelectedAnswerVariantsForDelete())
-	if err != nil {
-		return err
-	}
-
-	// answerfilesService := answerfiles.CreateService(s.helper)
-	// err = answerfilesService.UpsertMany(items.GetAnswerFiles())
-	// if err != nil {
-	// 	return err
-	// }
-	// err = answerfilesService.DeleteMany(items.GetAnswerFilesForDelete())
-	// if err != nil {
-	// 	return err
-	// }
-
-	return nil
+	return err
 }
 
-func (s *Service) DeleteMany(idPool []uuid.UUID) error {
-	if len(idPool) == 0 {
-		return nil
-	}
-	return s.repository.deleteMany(idPool)
+func (s *Service) Delete(c context.Context, id *string) error {
+	return R.Delete(c, id)
 }

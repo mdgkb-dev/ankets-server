@@ -1,14 +1,13 @@
 package routing
 
 import (
-	"mdgkb/ankets-server/handlers/answervariants"
 	"mdgkb/ankets-server/handlers/auth"
+	"mdgkb/ankets-server/handlers/fields"
+	"mdgkb/ankets-server/handlers/formfills"
+	"mdgkb/ankets-server/handlers/forms"
+	"mdgkb/ankets-server/handlers/formsections"
 	"mdgkb/ankets-server/handlers/humans"
-	"mdgkb/ankets-server/handlers/questions"
-	"mdgkb/ankets-server/handlers/researches"
-	"mdgkb/ankets-server/handlers/researchesresults"
 	"mdgkb/ankets-server/handlers/users"
-	"mdgkb/ankets-server/handlers/usersresearches"
 	authRouter "mdgkb/ankets-server/routing/auth"
 
 	humansRouter "mdgkb/ankets-server/routing/humans"
@@ -16,11 +15,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	answervariantsRouter "mdgkb/ankets-server/routing/answervariants"
-	questionsRouter "mdgkb/ankets-server/routing/questions"
-	researchesRouter "mdgkb/ankets-server/routing/researches"
-	researchesresultsRouter "mdgkb/ankets-server/routing/researchesresults"
-	usersresearchesRouter "mdgkb/ankets-server/routing/usersresearches"
+	fieldsRouter "mdgkb/ankets-server/routing/fields"
+	formFillsRouter "mdgkb/ankets-server/routing/formfills"
+	formsRouter "mdgkb/ankets-server/routing/forms"
+	formsectionsRouter "mdgkb/ankets-server/routing/formsections"
 
 	helperPack "github.com/pro-assistance/pro-assister/helper"
 	"github.com/pro-assistance/pro-assister/middleware"
@@ -38,19 +36,18 @@ func Init(r *gin.Engine, helper *helperPack.Helper) {
 	users.Init(helper)
 	usersRouter.Init(api.Group("/users"), users.H)
 
+	formsections.Init(helper)
+	formsectionsRouter.Init(api.Group("/form-sections"), formsections.H)
+
 	humans.Init(helper)
 	humansRouter.Init(api.Group("/humans"), humans.H)
 
-	usersresearches.Init(helper)
-	usersresearchesRouter.Init(api.Group("/users-researches"), usersresearches.H)
-	researches.Init(helper)
-	researchesRouter.Init(api.Group("/researches"), researches.H)
+	forms.Init(helper)
+	formsRouter.Init(api.Group("/forms"), forms.H)
 
-	questions.Init(helper)
-	questionsRouter.Init(api.Group("/questions"), questions.H)
+	fields.Init(helper)
+	fieldsRouter.Init(api.Group("/fields"), fields.H)
 
-	researchesresultsRouter.Init(api.Group("/researches-results"), researchesresults.CreateHandler(helper))
-
-	answervariants.Init(helper)
-	answervariantsRouter.Init(api.Group("/answer-variants"), answervariants.H)
+	formfills.Init(helper)
+	formFillsRouter.Init(api.Group("/form-fills"), formfills.H)
 }

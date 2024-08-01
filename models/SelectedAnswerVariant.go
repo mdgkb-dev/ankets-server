@@ -5,29 +5,29 @@ import (
 	"github.com/uptrace/bun"
 )
 
-type SelectedAnswerVariant struct {
-	bun.BaseModel `bun:"selected_answer_variants,alias:selected_answer_variants"`
+type SelectedFieldFillVariant struct {
+	bun.BaseModel `bun:"selected_FieldFill_variants,alias:selected_FieldFill_variants"`
 	ID            uuid.NullUUID `bun:"id,pk,type:uuid,default:uuid_generate_v4()" json:"id" `
-	Answer        *Answer       `bun:"rel:belongs-to" json:"answer"`
-	AnswerID      uuid.NullUUID `bun:"type:uuid" json:"answerId"`
+	FieldFill        *FieldFill       `bun:"rel:belongs-to" json:"FieldFill"`
+	FieldFillID      uuid.NullUUID `bun:"type:uuid" json:"FieldFillId"`
 
-	AnswerVariant   *AnswerVariant `bun:"rel:belongs-to" json:"answerVariant"`
-	AnswerVariantID uuid.NullUUID  `bun:"type:uuid" json:"answerVariantId"`
+	FieldFillVariant   *FieldFillVariant `bun:"rel:belongs-to" json:"FieldFillVariant"`
+	FieldFillVariantID uuid.NullUUID  `bun:"type:uuid" json:"FieldFillVariantId"`
 	PatientID       uuid.NullUUID  `bun:"type:uuid" json:"patientId"`
 }
 
-type SelectedAnswerVariants []*SelectedAnswerVariant
+type SelectedFieldFillVariants []*SelectedFieldFillVariant
 
-func (item *SelectedAnswerVariant) SetIDForChildren() {
+func (item *SelectedFieldFillVariant) SetIDForChildren() {
 	//if len(item.RegisterPropertyOthers) == 0 {
 	//	return
 	//}
 	//for i := range item.RegisterPropertyOthers {
-	//	item.RegisterPropertyOthers[i].AnswerVariantID = item.ID
+	//	item.RegisterPropertyOthers[i].FieldFillVariantID = item.ID
 	//}
 }
 
-func (items SelectedAnswerVariants) SetIDForChildren() {
+func (items SelectedFieldFillVariants) SetIDForChildren() {
 	if len(items) == 0 {
 		return
 	}

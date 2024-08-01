@@ -1,4 +1,4 @@
-package selectedanswervariants
+package selectedFieldFillvariants
 
 import (
 	"mdgkb/ankets-server/models"
@@ -6,11 +6,11 @@ import (
 	"github.com/google/uuid"
 )
 
-func (s *Service) Create(item *models.SelectedAnswerVariant) error {
+func (s *Service) Create(item *models.SelectedFieldFillVariant) error {
 	return s.repository.create(item)
 }
 
-func (s *Service) GetAll() ([]*models.SelectedAnswerVariant, error) {
+func (s *Service) GetAll() ([]*models.SelectedFieldFillVariant, error) {
 	items, err := s.repository.getAll()
 	if err != nil {
 		return nil, err
@@ -18,7 +18,7 @@ func (s *Service) GetAll() ([]*models.SelectedAnswerVariant, error) {
 	return items, nil
 }
 
-func (s *Service) Get(id *string) (*models.SelectedAnswerVariant, error) {
+func (s *Service) Get(id *string) (*models.SelectedFieldFillVariant, error) {
 	item, err := s.repository.get(id)
 	if err != nil {
 		return nil, err
@@ -26,7 +26,7 @@ func (s *Service) Get(id *string) (*models.SelectedAnswerVariant, error) {
 	return item, nil
 }
 
-func (s *Service) Update(item *models.SelectedAnswerVariant) error {
+func (s *Service) Update(item *models.SelectedFieldFillVariant) error {
 	return s.repository.update(item)
 }
 
@@ -34,7 +34,7 @@ func (s *Service) Delete(id *string) error {
 	return s.repository.delete(id)
 }
 
-func (s *Service) UpsertMany(items models.SelectedAnswerVariants) error {
+func (s *Service) UpsertMany(items models.SelectedFieldFillVariants) error {
 	if len(items) == 0 {
 		return nil
 	}

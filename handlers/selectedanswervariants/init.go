@@ -1,4 +1,4 @@
-package selectedanswervariants
+package selectedFieldFillvariants
 
 import (
 	"context"
@@ -20,25 +20,25 @@ type IHandler interface {
 }
 
 type IService interface {
-	GetAll() ([]*models.SelectedAnswerVariant, error)
-	Get(*string) (*models.SelectedAnswerVariant, error)
-	Create(*models.SelectedAnswerVariant) error
-	Update(*models.SelectedAnswerVariant) error
+	GetAll() ([]*models.SelectedFieldFillVariant, error)
+	Get(*string) (*models.SelectedFieldFillVariant, error)
+	Create(*models.SelectedFieldFillVariant) error
+	Update(*models.SelectedFieldFillVariant) error
 	Delete(*string) error
 
-	UpsertMany(models.SelectedAnswerVariants) error
+	UpsertMany(models.SelectedFieldFillVariants) error
 	DeleteMany([]uuid.UUID) error
 }
 
 type IRepository interface {
 	db() *bun.DB
-	create(*models.SelectedAnswerVariant) error
-	getAll() ([]*models.SelectedAnswerVariant, error)
-	get(*string) (*models.SelectedAnswerVariant, error)
-	update(*models.SelectedAnswerVariant) error
+	create(*models.SelectedFieldFillVariant) error
+	getAll() ([]*models.SelectedFieldFillVariant, error)
+	get(*string) (*models.SelectedFieldFillVariant, error)
+	update(*models.SelectedFieldFillVariant) error
 	delete(*string) error
 
-	upsertMany(radios models.SelectedAnswerVariants) error
+	upsertMany(radios models.SelectedFieldFillVariants) error
 	deleteMany([]uuid.UUID) error
 }
 

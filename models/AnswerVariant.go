@@ -5,15 +5,15 @@ import (
 	"github.com/uptrace/bun"
 )
 
-type AnswerVariant struct {
-	bun.BaseModel     `bun:"answer_variants,alias:answer_variants"`
+type FieldFillVariant struct {
+	bun.BaseModel     `bun:"FieldFill_variants,alias:FieldFill_variants"`
 	ID                uuid.NullUUID `bun:"id,pk,type:uuid,default:uuid_generate_v4()" json:"id" `
 	Name              string        `json:"name"`
-	QuestionID        uuid.NullUUID `bun:"type:uuid" json:"questionId"`
-	Question          *Question     `bun:"rel:belongs-to" json:"question"`
+	FieldID        uuid.NullUUID `bun:"type:uuid" json:"FieldId"`
+	Field          *Field     `bun:"rel:belongs-to" json:"Field"`
 	Order             int           `bun:"item_order" json:"order"`
 	Score             int           `json:"score"`
-	ShowMoreQuestions bool          `json:"showMoreQuestions"`
+	ShowMoreFields bool          `json:"showMoreFields"`
 	//RegisterPropertyOthers          RegisterPropertyOthers `bun:"rel:has-many" json:"registerPropertyOthers"`
 	//RegisterPropertyOthersForDelete []uuid.UUID            `bun:"-" json:"registerPropertyOthersForDelete"`
 
@@ -21,18 +21,18 @@ type AnswerVariant struct {
 	// RegisterQueryPercentages ResearchQueryPercentages `bun:"-" `
 }
 
-type AnswerVariants []*AnswerVariant
+type FieldFillVariants []*FieldFillVariant
 
-func (item *AnswerVariant) SetIDForChildren() {
+func (item *FieldFillVariant) SetIDForChildren() {
 	//if len(item.RegisterPropertyOthers) == 0 {
 	//	return
 	//}
 	//for i := range item.RegisterPropertyOthers {
-	//	item.RegisterPropertyOthers[i].AnswerVariantID = item.ID
+	//	item.RegisterPropertyOthers[i].FieldFillVariantID = item.ID
 	//}
 }
 
-func (items AnswerVariants) SetIDForChildren() {
+func (items FieldFillVariants) SetIDForChildren() {
 	if len(items) == 0 {
 		return
 	}
@@ -41,7 +41,7 @@ func (items AnswerVariants) SetIDForChildren() {
 	}
 }
 
-//func (items AnswerVariants) GetRegisterPropertyOthers() RegisterPropertyOthers {
+//func (items FieldFillVariants) GetRegisterPropertyOthers() RegisterPropertyOthers {
 //	itemsForGet := make(RegisterPropertyOthers, 0)
 //	for i := range items {
 //		itemsForGet = append(itemsForGet, items[i].RegisterPropertyOthers...)
@@ -49,7 +49,7 @@ func (items AnswerVariants) SetIDForChildren() {
 //	return itemsForGet
 //}
 
-func (items AnswerVariants) GetRegisterPropertyOthersForDelete() []uuid.UUID {
+func (items FieldFillVariants) GetRegisterPropertyOthersForDelete() []uuid.UUID {
 	itemsForGet := make([]uuid.UUID, 0)
 	//for i := range items {
 	//	itemsForGet = append(itemsForGet, items[i].RegisterPropertyOthersForDelete...)
@@ -57,7 +57,7 @@ func (items AnswerVariants) GetRegisterPropertyOthersForDelete() []uuid.UUID {
 	return itemsForGet
 }
 
-func (item *AnswerVariant) writeXlsxAggregatedValues(key string) {
+func (item *FieldFillVariant) writeXlsxAggregatedValues(key string) {
 	_, ok := item.AggregatedValues[key]
 	if ok {
 		item.AggregatedValues[key]++
@@ -67,7 +67,7 @@ func (item *AnswerVariant) writeXlsxAggregatedValues(key string) {
 }
 
 //
-// func (item *AnswerVariant) GetAggregatedPercentage() {
+// func (item *FieldFillVariant) GetAggregatedPercentage() {
 // 	sum := float64(0)
 // 	for k, v := range item.AggregatedValues {
 // 		sum += v
@@ -78,15 +78,15 @@ func (item *AnswerVariant) writeXlsxAggregatedValues(key string) {
 // 	})
 // }
 //
-// func (items AnswerVariants) Include(answers Answers) string {
+// func (items FieldFillVariants) Include(FieldFills FieldFills) string {
 // 	exists := No
 // 	for _, item := range items {
-// 		if len(answers) == 0 {
+// 		if len(FieldFills) == 0 {
 // 			break
 // 		}
-// 		for _, a := range answers {
-// 			for _, s := range a.SelectedAnswerVariants {
-// 				if s.AnswerVariantID == item.ID {
+// 		for _, a := range FieldFills {
+// 			for _, s := range a.SelectedFieldFillVariants {
+// 				if s.FieldFillVariantID == item.ID {
 // 					exists = Yes
 // 					break
 // 				}

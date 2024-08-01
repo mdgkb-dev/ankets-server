@@ -1,4 +1,4 @@
-package fieldfills
+package forms
 
 import (
 	"mdgkb/ankets-server/models"
@@ -9,7 +9,7 @@ import (
 )
 
 func (h *Handler) Create(c *gin.Context) {
-	var item models.FieldFill
+	var item models.Form
 	_, err := h.helper.HTTP.GetForm(c, &item)
 	if h.helper.HTTP.HandleError(c, err) {
 		return
@@ -56,12 +56,25 @@ func (h *Handler) Delete(c *gin.Context) {
 }
 
 func (h *Handler) Update(c *gin.Context) {
-	var item models.FieldFill
+	var item models.Form
 	_, err := h.helper.HTTP.GetForm(c, &item)
 	if h.helper.HTTP.HandleError(c, err) {
 		return
 	}
 	err = S.Update(c.Request.Context(), &item)
+	if h.helper.HTTP.HandleError(c, err) {
+		return
+	}
+	c.JSON(http.StatusOK, item)
+}
+
+func (h *Handler) UpdateMany(c *gin.Context) {
+	var item models.Forms
+	_, err := h.helper.HTTP.GetForm(c, &item)
+	if h.helper.HTTP.HandleError(c, err) {
+		return
+	}
+	err = S.UpdateMany(c.Request.Context(), item)
 	if h.helper.HTTP.HandleError(c, err) {
 		return
 	}
